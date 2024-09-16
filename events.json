@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Yoga Class",
+    "date": "2024-07-25",
+    "location": "Community Center",
+    "description": "A relaxing yoga session."
+  },
+  {
+    "title": "Running Club",
+    "date": "2024-07-26",
+    "location": "City Park",
+    "description": "Join us for a morning run."
+  },
+  {
+    "title": "Swimming Session",
+    "date": "2024-07-27",
+    "location": "Community Pool",
+    "description": "Free swim session for all."
+  },
+  {
+    "title": "Cycling Event",
+    "date": "2024-07-28",
+    "location": "Main Street",
+    "description": "City cycling event."
+  },
+  {
+    "title": "Pilates Class",
+    "date": "2024-07-29",
+    "location": "Fitness Studio",
+    "description": "Pilates for beginners."
+  },
+  {
+    "title": "Dance Workshop",
+    "date": "2024-07-30",
+    "location": "Dance Hall",
+    "description": "Learn the basics of salsa."
+  },
+  {
+    "title": "Weightlifting",
+    "date": "2024-07-31",
+    "location": "Gym",
+    "description": "Weightlifting techniques."
+  },
+  {
+    "title": "Hiking Trip",
+    "date": "2024-08-01",
+    "location": "Mountain Trail",
+    "description": "Group hike in the mountains."
+  },
+  {
+    "title": "Zumba Class",
+    "date": "2024-08-02",
+    "location": "Fitness Center",
+    "description": "Energetic Zumba class."
+  },
+  {
+    "title": "Martial Arts",
+    "date": "2024-08-03",
+    "location": "Martial Arts School",
+    "description": "Introduction to martial arts."
+  }
+]
