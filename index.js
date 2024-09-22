@@ -14,19 +14,25 @@ async function loadEvents() {
     const eventsRef = admin.firestore().collection('events');
     const snapshot = await eventsRef.get();
 
-    if (snapshot.empty) {
-        console.log('No events found. Loading default events...');
-        const batch = admin.firestore().batch();
-
-        events.forEach(event => {
+    const existingEvents = new Set();
+    snapshot.forEach(doc => {
+        const data = doc.data();
+        existingEvents.add(data.title);
+    });
+    const batch = admin.firestore().batch();
+    let newEventsCount = 0;
+    events.forEach(event => {
+        if (!existingEvents.has(event.title)) {
             const eventRef = eventsRef.doc();
             batch.set(eventRef, event);
-        });
-
+            newEventsCount++;
+        }
+    });
+    if (newEventsCount > 0) {
         await batch.commit();
-        console.log('Events loaded successfully.');
+        console.log(`${newEventsCount} new events loaded successfully.`);
     } else {
-        console.log('Events already exist in the database.');
+        console.log('No new events to add.');
     }
 }
 
@@ -245,6 +251,110 @@ app.get('/attended-events', async (req, res) => {
         res.status(400).send({ error: error.message });
     }
 });
+
+app.get('/events-for-feedback', async (req, res) => {
+    const token = req.headers.authorization?.replace('Bearer ', '');
+
+    if (!token) {
+        return res.status(400).send({ error: 'Authorization header is missing' });
+    }
+
+    try {
+        const decodedToken = await admin.auth().verifyIdToken(token);
+        const attendedEvents = await admin.firestore().collection('users').doc(decodedToken.uid).collection('attendedEvents').get();
+        const reviews = await admin.firestore().collection('users').doc(decodedToken.uid).collection('reviews').get();
+
+        const reviewedEventIds = reviews.docs.map(doc => doc.data().event);
+        const eventsForFeedback = [];
+
+        attendedEvents.forEach(event => {
+            const eventData = event.data();
+            if (!reviewedEventIds.includes(eventData.id)) {
+                eventsForFeedback.push({ id: event.id, ...eventData });
+            }
+        });
+
+        res.status(200).send(eventsForFeedback);
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
+});
+
+
+app.post('/reviews', async (req, res) => {
+    const token = req.headers.authorization?.replace('Bearer ', '');
+    const { event, comment, rating } = req.body;
+    if (!token) {
+        return res.status(400).send({ error: 'Authorization header is missing' });
+    }
+
+    if (!event || !comment || !rating) {
+        return res.status(400).send({ error: 'Faltan datos en el cuerpo de la solicitud' });
+    }
+
+    try {
+        const decodedToken = await admin.auth().verifyIdToken(token);
+        const newReview = {
+            event,
+            comment,
+            rating,
+            userId: decodedToken.uid,
+            createdAt: new Date().toISOString()
+        };
+        await admin.firestore().collection('reviews').add(newReview);
+        res.status(201).send({ message: 'Reseña creada exitosamente' });
+    } catch (error) {
+        // Manejo de errores
+        res.status(400).send({ error: error.message });
+    }
+});
+
+app.get('/user-reviews-with-events', async (req, res) => {
+    let token = req.headers.authorization?.replace('Bearer ', '');
+    if (!token) {
+        return res.status(400).send({ error: 'Authorization header is missing' });
+    }
+
+    try {
+        const decodedToken = await admin.auth().verifyIdToken(token);
+        const userId = decodedToken.uid;
+
+        const reviewsSnapshot = await admin.firestore()
+            .collection('reviews')
+            .where('userId', '==', userId)
+            .get();
+
+        if (reviewsSnapshot.empty) {
+            return res.status(404).send({ error: 'No reviews found' });
+        }
+
+        const eventIds = reviewsSnapshot.docs.map(doc => doc.data().event);
+
+
+        const eventsRef = admin.firestore().collection('events');
+        const eventsData = {};
+        const eventsSnapshot = await eventsRef.where(admin.firestore.FieldPath.documentId(), 'in', eventIds).get();
+
+        eventsSnapshot.forEach(doc => {
+            eventsData[doc.id] = { id: doc.id, ...doc.data() };
+        });
+
+        const reviewsWithEvents = reviewsSnapshot.docs.map(doc => {
+            const reviewData = doc.data();
+            const eventData = eventsData[reviewData.event] || { title: 'Evento Desconocido' };
+            return {
+                id: doc.id,
+                eventName: eventData.title,
+                ...reviewData
+            };
+        });
+
+        res.status(200).send(reviewsWithEvents);
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

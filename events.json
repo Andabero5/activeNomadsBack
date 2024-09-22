@@ -1,62 +1,62 @@
 [
   {
-    "title": "Yoga Class",
-    "date": "2024-07-25",
-    "location": "Community Center",
-    "description": "A relaxing yoga session."
+    "title": "Clase de Yoga",
+    "date": "2024-09-25",
+    "location": "Centro Comunitario",
+    "description": "Una sesión relajante de yoga."
   },
   {
-    "title": "Running Club",
-    "date": "2024-07-26",
-    "location": "City Park",
-    "description": "Join us for a morning run."
+    "title": "Club de Running",
+    "date": "2024-09-26",
+    "location": "Parque de la Ciudad",
+    "description": "Únete a nosotros para una carrera matutina."
   },
   {
-    "title": "Swimming Session",
-    "date": "2024-07-27",
-    "location": "Community Pool",
-    "description": "Free swim session for all."
+    "title": "Sesión de Natación",
+    "date": "2024-09-27",
+    "location": "Piscina Comunitaria",
+    "description": "Sesión de natación gratuita para todos."
   },
   {
-    "title": "Cycling Event",
-    "date": "2024-07-28",
-    "location": "Main Street",
-    "description": "City cycling event."
+    "title": "Evento de Ciclismo",
+    "date": "2024-09-28",
+    "location": "Calle Principal",
+    "description": "Evento de ciclismo por la ciudad."
   },
   {
-    "title": "Pilates Class",
-    "date": "2024-07-29",
-    "location": "Fitness Studio",
-    "description": "Pilates for beginners."
+    "title": "Clase de Pilates",
+    "date": "2024-09-29",
+    "location": "Estudio de Fitness",
+    "description": "Pilates para principiantes."
   },
   {
-    "title": "Dance Workshop",
-    "date": "2024-07-30",
-    "location": "Dance Hall",
-    "description": "Learn the basics of salsa."
+    "title": "Taller de Baile",
+    "date": "2024-09-30",
+    "location": "Sala de Baile",
+    "description": "Aprende los conceptos básicos de salsa."
   },
   {
-    "title": "Weightlifting",
-    "date": "2024-07-31",
-    "location": "Gym",
-    "description": "Weightlifting techniques."
+    "title": "Levantamiento de Pesas",
+    "date": "2024-10-01",
+    "location": "Gimnasio",
+    "description": "Técnicas de levantamiento de pesas."
   },
   {
-    "title": "Hiking Trip",
-    "date": "2024-08-01",
-    "location": "Mountain Trail",
-    "description": "Group hike in the mountains."
+    "title": "Excursión de Senderismo",
+    "date": "2024-10-02",
+    "location": "Sendero de la Montaña",
+    "description": "Excursión en grupo por las montañas."
   },
   {
-    "title": "Zumba Class",
-    "date": "2024-08-02",
-    "location": "Fitness Center",
-    "description": "Energetic Zumba class."
+    "title": "Clase de Zumba",
+    "date": "2024-10-03",
+    "location": "Centro de Fitness",
+    "description": "Clase energética de Zumba."
   },
   {
-    "title": "Martial Arts",
-    "date": "2024-08-03",
-    "location": "Martial Arts School",
-    "description": "Introduction to martial arts."
+    "title": "Artes Marciales",
+    "date": "2024-10-04",
+    "location": "Escuela de Artes Marciales",
+    "description": "Introducción a las artes marciales."
   }
 ]
