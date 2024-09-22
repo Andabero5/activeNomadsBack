@@ -30,6 +30,27 @@ async function loadEvents() {
     }
 }
 
+app.get('/user-info', async (req, res) => {
+    let token = req.headers.authorization?.replace('Bearer ', '');
+
+    if (!token) {
+        return res.status(400).send({error: 'Authorization header is missing'});
+    }
+
+    try {
+        const decodedToken = await admin.auth().verifyIdToken(token);
+        const userDoc = await admin.firestore().collection('users').doc(decodedToken.uid).get();
+
+        if (!userDoc.exists) {
+            res.status(404).send({error: 'User not found'});
+        } else {
+            res.status(200).send(userDoc.data());
+        }
+    } catch (error) {
+        res.status(400).send({error: error.message});
+    }
+});
+
 app.post('/signup', async (req, res) => {
     const { email, password } = req.body;
 
