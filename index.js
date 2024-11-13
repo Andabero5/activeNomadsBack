@@ -6,14 +6,14 @@ const { Timestamp } = require('firebase-admin/firestore');
 const events = require('./events.json');
 
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
-
 app.use(cors({
     origin: 'https://active-nomads.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+app.use(bodyParser.json());
+
+
 
 async function loadEvents() {
     const eventsRef = admin.firestore().collection('events');
