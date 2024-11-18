@@ -1,5 +1,4 @@
 const admin = require('firebase-admin');
-const {ServiceAccountCredential} = require("firebase-admin/lib/app/credential-internal");
 const serviceAccount = {
     type: process.env.FIREBASE_TYPE,
     project_id: process.env.FIREBASE_PROJECT_ID,
